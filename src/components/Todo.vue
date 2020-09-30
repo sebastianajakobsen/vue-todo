@@ -28,16 +28,22 @@
 
         <hr class="my-3"/>
         <p class="text-sm">Items left: ({{itemsLeft}})</p>
+        <p>MouseXPosition: {{x}} <br/> MouseYPosition: {{y}}</p>
     </div>
 </template>
 
 <script>
     import {v4 as uuidv4} from 'uuid';
     import {reactive, computed, onMounted, watch} from "vue";
+    import {useMousePosition} from '../functions/useMousePosition'
+
 
     export default {
         name: 'Todo',
         setup(props) {
+
+            const {x, y} = useMousePosition()
+
             const state = reactive({
                 newTodo: '',
                 todoId: uuidv4(),
@@ -113,7 +119,9 @@
                 addTodo,
                 deleteTodo,
                 toggleCompleted,
-                itemsLeft
+                itemsLeft,
+                x,
+                y,
             }
 
         },
