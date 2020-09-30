@@ -1,7 +1,7 @@
 <template>
     <div class="m-auto w-2/3 shadow p-3 mt-16">
 
-        <h1 class="text-2xl font-bold">Todo</h1>
+        <h1 class="text-2xl font-bold">{{title}}</h1>
 
         <label>
             <input @keyup.enter="addTodo" v-model="state.newTodo" type="text"
@@ -33,13 +33,14 @@
 
 <script>
     import {v4 as uuidv4} from 'uuid';
-    import {reactive, computed} from "vue";
+    import {reactive, computed, onMounted, watch} from "vue";
 
     export default {
         name: 'Todo',
-        setup() {
+        setup(props) {
             const state = reactive({
                 newTodo: '',
+                todoId: uuidv4(),
                 todos: [
                     {
                         id: 1,
@@ -65,12 +66,13 @@
                 if (state.newTodo.trim()) {
 
                     const newTodoObj = {
-                        id: uuidv4(),
+                        id: state.todoId,
                         description: state.newTodo,
                         completed: false
                     }
 
                     state.todos.push(newTodoObj);
+                    state.todoId = uuidv4();
                     state.newTodo = '';
                 }
             }
@@ -91,8 +93,20 @@
                 })
             }
 
-
             const itemsLeft = computed(() =>  state.todos.filter(todo => !todo.completed).length)
+
+            onMounted(() => {
+                console.log('Todo mounted')
+                console.log(props.title)
+            })
+
+            watch(
+                () => state.todoId,
+                (newValue, oldValue) => {
+                    console.log('New Value: ' + newValue)
+                    console.log('Old Value: ' + oldValue)
+                }
+            )
 
             return {
                 state,
@@ -101,8 +115,12 @@
                 toggleCompleted,
                 itemsLeft
             }
+
         },
 
+        props: {
+            title: String,
+        },
         data() {
             return {
                 // newTodo: '',

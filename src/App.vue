@@ -1,6 +1,6 @@
 <template>
 
-  <Todo/>
+  <Todo title="Todo App"/>
 </template>
 
 <script>
