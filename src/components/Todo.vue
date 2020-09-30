@@ -4,7 +4,7 @@
         <h1 class="text-2xl font-bold">Todo</h1>
 
         <li v-for="todo in todos">
-            <span :key="todo.id">
+            <span :key="todo.id" :class="{'line-through': todo.completed }" >
                {{ todo.description }}
             </span>
 
