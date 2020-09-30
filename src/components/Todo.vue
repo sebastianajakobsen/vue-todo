@@ -33,17 +33,17 @@
                     {
                         id:1,
                         description:'Finish Vue3 todo',
-                        isCompleted:false
+                        completed:false
                     },
                     {
                         id:2,
                         description:'Make food',
-                        isCompleted:false
+                        completed:false
                     },
                     {
                         id:3,
                         description:'Take a nap',
-                        isCompleted:true
+                        completed:true
                     }
                 ]
             }
@@ -51,7 +51,7 @@
 
         computed: {
             isCompleted() {
-                return this.todos.filter(todo => todo.isCompleted).length
+                return this.todos.filter(todo => todo.completed).length
             }
         },
         methods: {
@@ -65,7 +65,7 @@
                 const newTodoObj = {
                     id: uuidv4(),
                     description: this.newTodo,
-                    completed: false
+                    completed: true
                 }
 
                 this.todos = [...this.todos, newTodoObj];
