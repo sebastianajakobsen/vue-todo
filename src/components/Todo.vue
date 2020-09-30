@@ -4,15 +4,18 @@
         <h1 class="text-2xl font-bold">Todo</h1>
 
         <li v-for="todo in todos">
+
+            <input :checked="todo.completed"  type="checkbox" @click="toggleCompleted(todo.id)" />
+
             <span :key="todo.id" :class="{'line-through': todo.completed }" >
                {{ todo.description }}
             </span>
 
-            <span @click="deleteTodo(todo.id)" class="mx-2 cursor-pointer">x</span>
+            <span @click="deleteTodo(todo.id)" class="text-red-700 mx-2 cursor-pointer">x</span>
         </li>
 
         <label>
-            <input v-on:keyup.enter="addTodo"  v-model="newTodo"
+            <input @keyup.enter="addTodo"  v-model="newTodo" type="text"
                    placeholder="New todo..."
                    class="shadow my-2 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
@@ -71,6 +74,18 @@
                 this.todos = [...this.todos, newTodoObj];
 
                 this.newTodo = '';
+            },
+
+            toggleCompleted(id) {
+                this.todos =  this.todos.map(todo => {
+                    if(todo.id === id) {
+                        return {
+                            ...todo,
+                            completed: !todo.completed
+                        }
+                    }
+                    return todo;
+                })
             }
         }
 
